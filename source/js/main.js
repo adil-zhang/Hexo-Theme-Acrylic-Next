@@ -322,6 +322,7 @@ window.refreshFn = () => {
     }
     if(PAGECONFIG.is_page && PAGECONFIG.page === 'says')acrylic.reflashEssayWaterFall()
     GOBALCONFIG.covercolor && PAGECONFIG.is_post && coverColor()
+    PAGECONFIG.is_post && initCommentBarrage()
 }
 
 acrylic.initTheme()

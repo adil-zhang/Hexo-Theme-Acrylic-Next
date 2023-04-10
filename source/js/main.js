@@ -331,6 +331,17 @@ class acrylic {
             $meting.aplayer.play();
         }
     }
+    static hideCookie() {
+        setTimeout(() => {
+          const cookiesWindow = document.getElementById("cookies-window");
+          if (cookiesWindow) {
+            cookiesWindow.classList.add("cw-hide");
+            setTimeout(() => {
+              $("#cookies-window").hide();
+            }, 1000);
+          }
+        }, 3000);
+      }
 }
 
 class hightlight {
@@ -411,6 +422,7 @@ window.refreshFn = () => {
     setTimeState()
     chageTimeFormate()
     acrylic.addRuntime()
+    acrylic.hideCookie()
     GLOBALCONFIG.lazyload.enable && acrylic.lazyloadImg()
     GLOBALCONFIG.lightbox && acrylic.lightbox('#article-container img, #bber .bber-content-img img, #album_detail album-content-img img')
     GLOBALCONFIG.randomlinks && randomLinksList()

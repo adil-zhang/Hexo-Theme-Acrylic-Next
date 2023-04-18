@@ -303,6 +303,93 @@ class acrylic {
             }
         })
     }
+    static fetchData() {
+        const url = 'https://api.adil.com.cn/api/essays';
+        const cacheBuster = Math.random();  
+        const requestUrl = `${url}?cacheBuster=${cacheBuster}`;  
+      
+        return fetch(requestUrl)
+          .then(response => response.json())
+          .catch(error => {
+            console.error('获取说说数据失败:', error);
+            return [];
+          });
+    }  
+    static displayEssays(essays) {
+        const container = document.getElementById('bber-talk');
+        const maxItems = 10;
+        const swiperWrapper = document.querySelector('.swiper-wrapper');
+    
+        for (let i = 0; i < essays.length && i < maxItems; i++) {
+            const item = essays[i];
+            const content = item.image ? `${item.content}【图片】` : item.content;
+    
+            const div = document.createElement('div');
+            div.classList.add('li-style', 'swiper-slide');
+            div.textContent = content;
+    
+            swiperWrapper.appendChild(div);
+        }
+        if (container.swiper) {
+            container.swiper.destroy(true, true);
+        }
+        acrylic.initbbtalk();
+    }
+    
+    static fetchAndDisplayEssays() {
+        acrylic.fetchData().then(essays => acrylic.displayEssays(essays));
+    }
+    static async fetchAndDisplayLongEssays() {
+        const essays = await acrylic.fetchData();
+        const container = document.getElementById('waterfall');
+      
+        for (let i = 0; i < essays.length && i < 30; i++) {
+          const item = essays[i];
+          const li = document.createElement('li');
+          li.classList.add('item');
+      
+          let imageHtml = '';
+          if (item.images) {
+            let images;
+            try {
+              images = JSON.parse(item.images);
+            } catch (error) {
+              images = [];
+            }
+            
+            if (Array.isArray(images)) {
+              images.forEach(img => {
+                imageHtml += `<img src="${img}">`;
+              });
+            }
+          }
+      
+          let linkHtml = '';
+          if (item.link) {
+            linkHtml = `<a class="bber-content-link" href="${item.link}" title="跳转到短文指引的链接">链接</a>`;
+          }
+      
+          li.innerHTML = `
+            <div class="bber-content">
+              <p class="datacont">${item.content}</p>
+              <div class="bber-content-img">${imageHtml}</div>
+            </div>
+            <hr>
+            <div class="bber-bottom">
+              <div class="bber-info">
+                <div class="bber-info-time">
+                  <i class="fas fa-calendar-days"></i>
+                  <time class="datetime" datetime="${item.date}"></time>
+                </div>
+                ${linkHtml}
+              </div>
+            </div>
+          `;
+      
+          container.appendChild(li);
+        }
+        chageTimeFormate();
+      }
     static initbbtalk() {
         if (document.querySelector('#bber-talk')) {
             var swiper = new Swiper('.swiper-container', {
@@ -337,7 +424,7 @@ class acrylic {
           if (cookiesWindow) {
             cookiesWindow.classList.add("cw-hide");
             setTimeout(() => {
-              $("#cookies-window").hide();
+              cookiesWindow.style.display = "none";
             }, 1000);
           }
         }, 3000);
@@ -434,12 +521,13 @@ window.refreshFn = () => {
     PAGECONFIG.comment && initComment()
     if (PAGECONFIG.is_home) {
         showTodayCard()
-        acrylic.initbbtalk()
+        acrylic.fetchAndDisplayEssays()
     }
-    if (PAGECONFIG.is_page && PAGECONFIG.page === 'says') acrylic.reflashEssayWaterFall()
-    if (PAGECONFIG.is_page) {
-        if (document.getElementById('album_detail')) acrylic.reflashEssayWaterFall()
-    }
+    if (PAGECONFIG.is_page && PAGECONFIG.page === 'says') 
+        {
+            acrylic.reflashEssayWaterFall()
+            acrylic.fetchAndDisplayLongEssays()
+        }
     GLOBALCONFIG.covercolor && coverColor()
 }
 

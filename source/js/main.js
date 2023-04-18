@@ -339,57 +339,59 @@ class acrylic {
     static fetchAndDisplayEssays() {
         acrylic.fetchData().then(essays => acrylic.displayEssays(essays));
     }
-    static async fetchAndDisplayLongEssays() {
-        const essays = await acrylic.fetchData();
-        const container = document.getElementById('waterfall');
+    static fetchAndDisplayLongEssays() {
+        acrylic.fetchData().then(essays => {
+          const container = document.getElementById('waterfall');
       
-        for (let i = 0; i < essays.length && i < 30; i++) {
-          const item = essays[i];
-          const li = document.createElement('li');
-          li.classList.add('item');
+          for (let i = 0; i < essays.length && i < 30; i++) {
+            const item = essays[i];
+            const li = document.createElement('li');
+            li.classList.add('item');
       
-          let imageHtml = '';
-          if (item.images) {
-            let images;
-            try {
-              images = JSON.parse(item.images);
-            } catch (error) {
-              images = [];
+            let imageHtml = '';
+            if (item.images) {
+              let images;
+              try {
+                images = JSON.parse(item.images);
+              } catch (error) {
+                images = [];
+              }
+      
+              if (Array.isArray(images)) {
+                images.forEach(img => {
+                  imageHtml += `<img src="${img}">`;
+                });
+              }
             }
-            
-            if (Array.isArray(images)) {
-              images.forEach(img => {
-                imageHtml += `<img src="${img}">`;
-              });
+      
+            let linkHtml = '';
+            if (item.link) {
+              linkHtml = `<a class="bber-content-link" href="${item.link}" title="跳转到短文指引的链接">链接</a>`;
             }
-          }
       
-          let linkHtml = '';
-          if (item.link) {
-            linkHtml = `<a class="bber-content-link" href="${item.link}" title="跳转到短文指引的链接">链接</a>`;
-          }
-      
-          li.innerHTML = `
-            <div class="bber-content">
-              <p class="datacont">${item.content}</p>
-              <div class="bber-content-img">${imageHtml}</div>
-            </div>
-            <hr>
-            <div class="bber-bottom">
-              <div class="bber-info">
-                <div class="bber-info-time">
-                  <i class="fas fa-calendar-days"></i>
-                  <time class="datetime" datetime="${item.date}"></time>
-                </div>
-                ${linkHtml}
+            li.innerHTML = `
+              <div class="bber-content">
+                <p class="datacont">${item.content}</p>
+                <div class="bber-content-img">${imageHtml}</div>
               </div>
-            </div>
-          `;
+              <hr>
+              <div class="bber-bottom">
+                <div class="bber-info">
+                  <div class="bber-info-time">
+                    <i class="fas fa-calendar-days"></i>
+                    <time class="datetime" datetime="${item.date}"></time>
+                  </div>
+                  ${linkHtml}
+                </div>
+              </div>
+            `;
       
-          container.appendChild(li);
-        }
-        chageTimeFormate();
+            container.appendChild(li);
+          }
+          chageTimeFormate();
+        });
       }
+      
     static initbbtalk() {
         if (document.querySelector('#bber-talk')) {
             var swiper = new Swiper('.swiper-container', {

@@ -5,7 +5,7 @@
 <%- css(cdn.fontawesomecss) %>    
 <%- css(cdn.snackbarcss) %>
 <%- js(cdn.qrcodejs) %>
-<% if(theme.comment.enable){ %>
+<% if(theme.comment.enable && page.comment){ %>
     <%- js(cdn.twikoojs) %>
 <% } %>
 <% if(theme.thirdparty.search.algolia_search.enable){ %>

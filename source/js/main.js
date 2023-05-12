@@ -352,7 +352,7 @@ class acrylic {
           if (item.images) {
             let images;
             try {
-              images = JSON.parse(item.images);
+                images = JSON.parse(`[${item.images}]`);
             } catch (error) {
               images = [];
             }

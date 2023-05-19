@@ -526,6 +526,7 @@ window.refreshFn = () => {
     scrollFn()
     sidebarFn()
     setTimeState()
+    GLOBALCONFIG.consolePlus.enable && newestCommentInit()
     chageTimeFormate()
     acrylic.addRuntime()
     acrylic.hideCookie()
@@ -551,6 +552,7 @@ window.refreshFn = () => {
 }
 
 acrylic.initTheme()
+
 let acrylic_musicPlaying = false
 document.addEventListener('DOMContentLoaded', function () {
     refreshFn()

@@ -34,6 +34,7 @@ const scrollFn = function () {
             }
         }
         percent()
+        acrylic.initThemeColor()
     }, 200))
     function scrollDirection(currentTop) {
         const result = currentTop > initTop
@@ -255,6 +256,30 @@ class acrylic {
         const el = document.getElementById('console')
         if (el.classList.contains('show')) {
             el.classList.remove('show')
+        }
+    }
+    static changeThemeColor(color) {
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        const appleMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        if (themeMeta !== null) {
+            themeMeta.setAttribute("content", color);
+            appleMeta.setAttribute("content", color);
+        }
+    }
+    
+    static initThemeColor() {
+        const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+        let colorProperty;
+        
+        if (scrollPosition > 0) {
+            colorProperty = "--heo-card-bg";
+        } else if (scrollPosition === 0) {
+            colorProperty =  PAGECONFIG.is_post? "--heo-main" : "--heo-background";
+        }
+        
+        if (colorProperty) {
+            const color = getComputedStyle(document.documentElement).getPropertyValue(colorProperty);
+            this.changeThemeColor(color);
         }
     }
     static copyPageUrl() {
@@ -548,6 +573,7 @@ window.refreshFn = () => {
             acrylic.reflashEssayWaterFall()
             acrylic.fetchAndDisplayLongEssays()
         }
+   
     GLOBALCONFIG.covercolor && coverColor()
 }
 

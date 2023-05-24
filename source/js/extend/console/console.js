@@ -60,7 +60,6 @@ const changeContent = (content) => {
     $dom.innerHTML = result
     window.lazyLoadInstance && window.lazyLoadInstance.update()
     window.pjax && window.pjax.refresh($dom)
-】
     chageTimeFormate()
 
   }

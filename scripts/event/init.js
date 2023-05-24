@@ -13,3 +13,5 @@ hexo.extend.filter.register('before_generate', () => {
       process.exit(-1)
     }
   })
+  
+

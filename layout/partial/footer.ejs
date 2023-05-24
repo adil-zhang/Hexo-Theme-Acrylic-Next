@@ -28,7 +28,7 @@
             <div class="footer-title-group">
                 <h3 class="footer-title">友链</h3>
                 <a class="random-friends-btn" href="javascript:randomLinksList();" rel="external nofollow">
-                    <i class="fa-solid fa-arrow-rotate-right"></i>
+                    <i class="heofont icon-refresh-line" style="font-size: 0.9rem;"></i>
                 </a>
             </div>
             <div class="footer-links" id="friend-links-in-footer">
@@ -42,11 +42,11 @@
             <div id="footer-section-tips">
                 <div class="copyright">©<%= moment(theme.aside.siteinfo.runtime).year() %> - <%= new Date().getFullYear() %> By 
                     <a class="footer-section-link" href="/" rel="external nofollow"><%= config.author %></a>
-                    <a class="footer-section-link" href="https://github.com/hexo-theme-Acrylic/Hexo-Theme-Acrylic-Next" rel="external nofollow" target="_blank"> Theme By Acrylic-Next</a>
                 </div>
             </div>
         </div>
         <div class="footer-section-right">
+            <a class="footer-section-link" href="https://github.com/hexo-theme-Acrylic/Hexo-Theme-Acrylic-Next" rel="external nofollow" target="_blank"> 主题</a>
             <a class="footer-section-link" href="/rss/">订阅</a>
             <% if(theme.site.icp){ %>
                 <a class="footer-section-link" target="_blank" href="https://beian.miit.gov.cn/#/Integrated/index" rel="noopener external nofollow noreferrer noopener">
@@ -54,8 +54,21 @@
                 </a>
             <% } %>
             <a class="footer-section-link cc" target="_blank" href="https://creativecommons.org/licenses/by/4.0/" title="cc协议">
-                <i class="fa-solid fa-closed-captioning"></i>
+                <i class="heofont icon-copyright-line"></i>
+                <i class="heofont icon-creative-commons-by-line"></i>
+                <i class="heofont icon-creative-commons-nc-line"></i>
+                <i class="heofont icon-creative-commons-nd-line"></i>
             </a>
         </div>
     </div>
 </div>
+<div class="needEndHide" id="cookies-window" >
+    <div class="cookies-window-title">协议提醒助手</div>
+    <div class="cookies-window-content">
+        <span class="cookies-tip">查看本站为你的个人隐私做出的努力</span>
+        <a class="cookies-link" href="/privacy/" title="本站如何保护你的隐私" data-pjax-state="">
+            <i class="heofont icon-arrow-right-circle-fill"></i>
+        </a>
+    </div>
+</div>
+<div class="comment-barrage needEndHide" ></div>

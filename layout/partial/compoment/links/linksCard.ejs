@@ -2,7 +2,7 @@
     <% data.forEach(item =>{ %>
         <div class="site-card">
             <% if(item.tag){ %>
-                <span class="site-card-tag"><%= item.tag %></span>
+                <span class="site-card-tag <%= item.vip ? 'vip' : '' %>" ><%= item.tag %></span>
             <% } %>
             <a class="img" itle="<%= item.name %>" href="<%= url_for(item.link) %>">
                 <img class="flink-avatar" src="<%= item.topimg %>" alt="<%= item.name %>">

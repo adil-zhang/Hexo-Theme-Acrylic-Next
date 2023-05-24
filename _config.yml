@@ -104,18 +104,18 @@ hometop:
       #   color: '#df5b40'
 
   categoryGroup:
-    G1:
-      name: Acrylic
-      icon: fas fa-dove
-      url: /tags/Acrylic/
-    G2:
-      name: 热门文章
-      icon: fas fa-burn
-      url: /tags/热门/
-    G3:
-      name: 实用教程
-      icon: fas fa-book
-      url: /tags/教程/
+    # G1:
+    #   name: Acrylic
+    #   icon: fas fa-dove
+    #   url: /tags/Acrylic/
+    # G2:
+    #   name: 热门文章
+    #   icon: fas fa-burn
+    #   url: /tags/热门/
+    # G3:
+    #   name: 实用教程
+    #   icon: fas fa-book
+    #   url: /tags/教程/
 
   recommendList:
     sup: 置顶文章

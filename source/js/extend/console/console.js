@@ -60,13 +60,16 @@ const changeContent = (content) => {
     $dom.innerHTML = result
     window.lazyLoadInstance && window.lazyLoadInstance.update()
     window.pjax && window.pjax.refresh($dom)
+】
     chageTimeFormate()
+
   }
   
   const newestCommentInit = () => {
     const $asideList = document.querySelector('#card-newest-comments .aside-list')
     if ($asideList) {
       getComment()
+
     }
   }
   

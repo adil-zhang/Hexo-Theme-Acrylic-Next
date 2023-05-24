@@ -26,15 +26,10 @@
         }
       });
     </script>
-<style>
-    :root {
-        --site-about-oneself-map--light: url(<%= site.data.about.oneself.map.light %>);
-        --site-about-oneself-map--dark: url(<%= site.data.about.oneself.map.dark %>);
-    }
-</style>
+
 <% const oneself = site.data.about.oneself; %>
 <div class="author-content-item-group column mapAndInfo">
-    <div class="author-content-item map single">
+    <div class="author-content-item map single" style="background: url(<%= oneself.map %> )">
       <span class="map-title">我现在住在 <b><%= oneself.location %></b></span></div>
     <div class="author-content-item selfInfo single">
       <div><span class="selfInfo-title">生于</span><span class="selfInfo-content" style="color: #43a6c6;"><%= oneself.birthYear %></span></div>
@@ -42,10 +37,4 @@
       <div><span class="selfInfo-title">现在职业</span><span class="selfInfo-content" style="color: #b04fe6;"><%= oneself.occupation %></span></div>
     </div>
   </div>
-</div>
-<div class="author-content">
-    <div class="create-site-post author-content-item single">
-      <div class="author-content-item-tips">心路历程</div><span class="author-content-item-title">为什么建站？</span>
-      <%- site.data.about.cause %>
-    </div>
 </div>

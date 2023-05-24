@@ -34,6 +34,7 @@ const scrollFn = function () {
             }
         }
         percent()
+        acrylic.initThemeColor()
     }, 200))
     function scrollDirection(currentTop) {
         const result = currentTop > initTop
@@ -257,6 +258,30 @@ class acrylic {
             el.classList.remove('show')
         }
     }
+    static changeThemeColor(color) {
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        const appleMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        if (themeMeta !== null) {
+            themeMeta.setAttribute("content", color);
+            appleMeta.setAttribute("content", color);
+        }
+    }
+    
+    static initThemeColor() {
+        const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+        let colorProperty;
+        
+        if (scrollPosition > 0) {
+            colorProperty = "--heo-card-bg";
+        } else if (scrollPosition === 0) {
+            colorProperty =  PAGECONFIG.is_post? "--heo-main" : "--heo-background";
+        }
+        
+        if (colorProperty) {
+            const color = getComputedStyle(document.documentElement).getPropertyValue(colorProperty);
+            this.changeThemeColor(color);
+        }
+    }
     static copyPageUrl() {
         utils.copy(window.location.href)
     }
@@ -303,6 +328,112 @@ class acrylic {
             }
         })
     }
+    static fetchData() {
+        const url = 'https://api.adil.com.cn/api/essays';
+        const cacheBuster = Math.random();  
+        const requestUrl = `${url}?cacheBuster=${cacheBuster}`;  
+      
+        return fetch(requestUrl)
+          .then(response => response.json())
+          .catch(error => {
+            console.error('获取说说数据失败:', error);
+            return [];
+          });
+    }  
+    static displayEssays(essays) {
+        const container = document.getElementById('bber-talk');
+        const maxItems = 10;
+        const swiperWrapper = document.querySelector('.swiper-wrapper');
+    
+        for (let i = 0; i < essays.length && i < maxItems; i++) {
+            const item = essays[i];
+            const content = item.image ? `${item.content}【图片】` : item.content;
+    
+            const div = document.createElement('div');
+            div.classList.add('li-style', 'swiper-slide');
+            div.textContent = content;
+    
+            swiperWrapper.appendChild(div);
+        }
+        if (container.swiper) {
+            container.swiper.destroy(true, true);
+        }
+        acrylic.initbbtalk();
+    }
+    
+    static fetchAndDisplayEssays() {
+        acrylic.fetchData().then(essays => acrylic.displayEssays(essays));
+    }
+    static async fetchAndDisplayLongEssays() {
+        const essays = await acrylic.fetchData();
+        const container = document.getElementById('waterfall');
+      
+        for (let i = 0; i < essays.length && i < 30; i++) {
+          const item = essays[i];
+          const li = document.createElement('li');
+          li.classList.add('item');
+
+          let imageHtml = '';
+          if (item.images) {
+            let images;
+            try {
+                images = JSON.parse(`[${item.images}]`);
+            } catch (error) {
+              images = [];
+            }
+            
+            if (Array.isArray(images)) {
+              images.forEach(img => {
+                imageHtml += `<img src="${img}">`;
+              });
+            }
+          }
+      
+          let linkHtml = '';
+          if (item.link) {
+            linkHtml = `<a class="bber-content-link" href="${item.link}" title="跳转到短文指引的链接">链接</a>`;
+          }
+      
+          li.innerHTML = `
+            <div class="bber-content">
+              <p class="datacont">${item.content}</p>
+              <div class="bber-content-img">${imageHtml}</div>
+            </div>
+            <hr>
+            <div class="bber-bottom">
+              <div class="bber-info">
+                <div class="bber-info-time">
+                  <i class="fas fa-calendar-days"></i>
+                  <time class="datetime" datetime="${item.date}"></time>
+                </div>
+                ${linkHtml}
+              </div>
+              <a class="bber-reply" onclick="acrylic.rightMenuCommentText(&quot;${item.content}&quot;)" data-pjax-state="" >
+                <i class="heofont icon-chat-1-fill" style="font-size: 1rem;">
+                </i>
+              </a>
+            </div>
+          `;
+      
+          container.appendChild(li);
+        }
+        chageTimeFormate();
+      }
+    static rightMenuCommentText(txt) {
+        const input = document.querySelector('.el-textarea__inner');
+        const evt = new Event('input', { bubbles: true, cancelable: true });
+        const inputValue = txt.replace(/\n/g, '\n> ');
+        input.value = '> ' + inputValue + '\n\n';
+        input.dispatchEvent(evt);
+        const domTop = document.querySelector("#post-comment").offsetTop;
+        window.scrollTo(0, domTop - 80);
+        input.focus();
+        input.setSelectionRange(-1, -1);
+        const commentTips = document.querySelector("#comment-tips");
+        if (commentTips) {
+          commentTips.classList.add("show");
+        }
+      }
     static initbbtalk() {
         if (document.querySelector('#bber-talk')) {
             var swiper = new Swiper('.swiper-container', {
@@ -331,6 +462,17 @@ class acrylic {
             $meting.aplayer.play();
         }
     }
+    static hideCookie() {
+        setTimeout(() => {
+          const cookiesWindow = document.getElementById("cookies-window");
+          if (cookiesWindow) {
+            cookiesWindow.classList.add("cw-hide");
+            setTimeout(() => {
+              cookiesWindow.style.display = "none";
+            }, 1000);
+          }
+        }, 3000);
+      }
 }
 
 class hightlight {
@@ -412,6 +554,7 @@ window.refreshFn = () => {
     GLOBALCONFIG.consolePlus.enable && newestCommentInit()
     chageTimeFormate()
     acrylic.addRuntime()
+    acrylic.hideCookie()
     GLOBALCONFIG.lazyload.enable && acrylic.lazyloadImg()
     GLOBALCONFIG.lightbox && acrylic.lightbox('#article-container img, #bber .bber-content-img img, #album_detail album-content-img img')
     GLOBALCONFIG.randomlinks && randomLinksList()
@@ -423,12 +566,14 @@ window.refreshFn = () => {
     PAGECONFIG.comment && initComment()
     if (PAGECONFIG.is_home) {
         showTodayCard()
-        acrylic.initbbtalk()
+        acrylic.fetchAndDisplayEssays()
     }
-    if (PAGECONFIG.is_page && PAGECONFIG.page === 'says') acrylic.reflashEssayWaterFall()
-    if (PAGECONFIG.is_page) {
-        if (document.getElementById('album_detail')) acrylic.reflashEssayWaterFall()
-    }
+    if (PAGECONFIG.is_page && PAGECONFIG.page === 'says') 
+        {
+            acrylic.reflashEssayWaterFall()
+            acrylic.fetchAndDisplayLongEssays()
+        }
+   
     GLOBALCONFIG.covercolor && coverColor()
 }
 

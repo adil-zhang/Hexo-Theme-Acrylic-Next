@@ -532,6 +532,23 @@ class tabs {
     }
 }
 
+function addPhotoFigcaption() {
+    const images = document.querySelectorAll('#article-container img');
+  
+    images.forEach((image) => {
+      const imageParent = image.parentNode;
+      const captionText = image.getAttribute('alt');
+  
+      if (captionText) {
+        const captionElement = document.createElement('div');
+        captionElement.className = 'img-alt is-center';
+        captionElement.textContent = captionText;
+  
+        imageParent.insertBefore(captionElement, image.nextSibling);
+      }
+    });
+  }
+  
 
 window.refreshFn = () => {
     scrollFn()
@@ -541,6 +558,7 @@ window.refreshFn = () => {
     chageTimeFormate()
     acrylic.addRuntime()
     acrylic.hideCookie()
+    addPhotoFigcaption()  
     GLOBALCONFIG.lazyload.enable && acrylic.lazyloadImg()
     GLOBALCONFIG.lightbox && acrylic.lightbox('#article-container img, #bber .bber-content-img img')
     GLOBALCONFIG.randomlinks && randomLinksList()

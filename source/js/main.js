@@ -409,6 +409,15 @@ class acrylic {
           commentTips.classList.add("show");
         }
       }
+    static clearCommentText() {
+    //   清空评论框中的内容
+        const input = document.querySelector('.el-textarea__inner');
+        const evt = new Event('input', { bubbles: true, cancelable: true });
+        input.value = '';
+        input.dispatchEvent(evt);
+        
+    }
+
     static initbbtalk() {
         if (document.querySelector('#bber-talk')) {
             var swiper = new Swiper('.swiper-container', {
@@ -531,7 +540,7 @@ window.refreshFn = () => {
     acrylic.addRuntime()
     acrylic.hideCookie()
     GLOBALCONFIG.lazyload.enable && acrylic.lazyloadImg()
-    GLOBALCONFIG.lightbox && acrylic.lightbox('#article-container img, #bber .bber-content-img img, #album_detail album-content-img img')
+    GLOBALCONFIG.lightbox && acrylic.lightbox('#article-container img, #bber .bber-content-img img')
     GLOBALCONFIG.randomlinks && randomLinksList()
     PAGECONFIG.toc && toc.init()
     if (PAGECONFIG.is_post || PAGECONFIG.is_page) {
@@ -549,6 +558,8 @@ window.refreshFn = () => {
             acrylic.fetchAndDisplayLongEssays()
         }
     GLOBALCONFIG.covercolor && coverColor()
+    acrylic.clearCommentText()
+    
 }
 
 acrylic.initTheme()

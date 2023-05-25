@@ -400,8 +400,7 @@ class acrylic {
         const inputValue = txt.replace(/\n/g, '\n> ');
         input.value = '> ' + inputValue + '\n\n';
         input.dispatchEvent(evt);
-        const domTop = document.querySelector("#post-comment").offsetTop;
-        window.scrollTo(0, domTop - 80);
+        utils.scrollToDest(utils.getEleTop(document.getElementById('post-comment')), 300)
         input.focus();
         input.setSelectionRange(-1, -1);
         const commentTips = document.querySelector("#comment-tips");
@@ -457,6 +456,9 @@ class acrylic {
           }
         }, 3000);
       }
+    static scrollToComment() {
+        utils.scrollToDest(utils.getEleTop(document.getElementById('post-comment')), 300)
+    }
 }
 
 class hightlight {

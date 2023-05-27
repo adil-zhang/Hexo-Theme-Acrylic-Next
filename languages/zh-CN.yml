@@ -7,6 +7,9 @@ copy:
   error: 复制失败
 
 time:
+  just: 刚刚
+  min: 分钟前
+  hour: 小时前
   recent: 最近
   yesterday: 昨天
   berforeyesterday: 前天

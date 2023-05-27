@@ -109,11 +109,21 @@ const setTimeState = () => {
 };
 
 const chageTimeFormate = () => {
-    const timeElements = document.getElementsByTagName("time"), lang = GLOBALCONFIG.lang.time
+    const timeElements = document.getElementsByTagName("time"), lang = GLOBALCONFIG.lang.time;
     for (var i = 0; i < timeElements.length; i++) {
-        const datetime = timeElements[i].getAttribute("datetime"), timeObj = new Date(datetime), daysDiff = utils.timeDiff(timeObj, new Date())
+        const datetime = timeElements[i].getAttribute("datetime"), timeObj = new Date(datetime);
+        const now = new Date();
+        const minutesDiff = Math.floor((now.getTime() - timeObj.getTime()) / (1000 * 60));
+        const hoursDiff = Math.floor(minutesDiff / 60);
+        const daysDiff = utils.timeDiff(timeObj, now);
         var timeString;
-        if (daysDiff === 0) {
+        if (minutesDiff < 1) {
+            timeString = lang.just;
+        } else if (minutesDiff < 60) {
+            timeString = minutesDiff + lang.min;
+        } else if (hoursDiff < 24) {
+            timeString = hoursDiff + lang.hour;
+        } else if (daysDiff === 0) {
             timeString = lang.recent;
         } else if (daysDiff === 1) {
             timeString = lang.yesterday;
@@ -131,6 +141,7 @@ const chageTimeFormate = () => {
         timeElements[i].textContent = timeString;
     }
 }
+
 
 const percent = () => {
     let a = document.documentElement.scrollTop || window.pageYOffset,

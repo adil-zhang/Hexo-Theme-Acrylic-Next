@@ -7,6 +7,9 @@ copy:
   error: Copied failed
 
 time:
+  just: Just now
+  min: Minutes ago
+  hour: Hours ago
   recent: Recent
   yesterday: Yesterday
   berforeyesterday: TDBY

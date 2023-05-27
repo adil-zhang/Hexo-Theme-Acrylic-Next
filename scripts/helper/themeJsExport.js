@@ -24,6 +24,9 @@ hexo.extend.helper.register('export_config', function() {
             },
             backtop: lang['nav.backtop'],
             time: {
+                just: lang['time.just'],
+                min: lang['time.min'],
+                hour: lang['time.hour'],
                 recent: lang['time.recent'],
                 yesterday: lang['time.yesterday'],
                 berforeyesterday: lang['time.berforeyesterday'],

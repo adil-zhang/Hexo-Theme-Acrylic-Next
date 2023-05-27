@@ -419,14 +419,6 @@ class acrylic {
           commentTips.classList.add("show");
         }
       }
-    static clearCommentText() {
-    //   清空评论框中的内容
-        const input = document.querySelector('.el-textarea__inner');
-        const evt = new Event('input', { bubbles: true, cancelable: true });
-        input.value = '';
-        input.dispatchEvent(evt);
-        
-    }
 
     static initbbtalk() {
         if (document.querySelector('#bber-talk')) {
@@ -578,7 +570,7 @@ window.refreshFn = () => {
         GLOBALCONFIG.hightlight.enable && hightlight.init()
         tabs.init()
     }
-    PAGECONFIG.comment && initComment()
+    PAGECONFIG.comment && initComment() 
     if (PAGECONFIG.is_home) {
         showTodayCard()
         acrylic.fetchAndDisplayEssays()
@@ -589,7 +581,7 @@ window.refreshFn = () => {
             acrylic.fetchAndDisplayLongEssays()
         }
     GLOBALCONFIG.covercolor && coverColor()
-    acrylic.clearCommentText()
+   
     
 }
 

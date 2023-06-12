@@ -581,6 +581,7 @@ window.refreshFn = () => {
             acrylic.fetchAndDisplayLongEssays()
         }
     GLOBALCONFIG.covercolor && coverColor()
+    PAGECONFIG.is_post && checkURLAndRun()
    
     
 }

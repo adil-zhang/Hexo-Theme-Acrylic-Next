@@ -383,7 +383,7 @@ class acrylic {
           li.innerHTML = `
             <div class="bber-content">
               <p class="datacont">${item.content}</p>
-              <div class="bber-content-img">${imageHtml}</div>
+              <div class="bber-content-img" view-image>${imageHtml}</div>
             </div>
             <hr>
             <div class="bber-bottom">
@@ -404,6 +404,7 @@ class acrylic {
           container.appendChild(li);
         }
         chageTimeFormate();
+        acrylic.lightbox('.bber-content-img img');
       }
     static rightMenuCommentText(txt) {
         const input = document.querySelector('.el-textarea__inner');
@@ -563,7 +564,7 @@ window.refreshFn = () => {
     acrylic.hideCookie()
     addPhotoFigcaption()  
     GLOBALCONFIG.lazyload.enable && acrylic.lazyloadImg()
-    GLOBALCONFIG.lightbox && acrylic.lightbox('#article-container img, #bber .bber-content-img img')
+    GLOBALCONFIG.lightbox && acrylic.lightbox('#article-container img, .bber-content-img img')
     GLOBALCONFIG.randomlinks && randomLinksList()
     PAGECONFIG.toc && toc.init()
     if (PAGECONFIG.is_post || PAGECONFIG.is_page) {

@@ -250,6 +250,16 @@ class acrylic {
             utils.snackbarShow(GLOBALCONFIG.lang.theme.light, false, 2000)
         }
     }
+    static changeSayHelloText() {
+        const e = ["🧨 数据技术狂热者", "🧑🏻‍💻 高效数据分析师","🔍 分享与热心帮助", "🏃 脚踏实地行动派", "🧱 团队合作小能手", "🛠 多面手专业人员"],
+            t = document.getElementById("author-info__sayhi");
+        let o = e[Math.floor(Math.random() * e.length)];
+        for (; o === lastSayHello;)
+            o = e[Math.floor(Math.random() * e.length)];
+        t.textContent = o,
+        lastSayHello = o
+    }
+
     static hideTodayCard() {
         document.getElementById('todayCard').classList.add('hide')
     }
@@ -395,7 +405,7 @@ class acrylic {
                 ${linkHtml}
               </div>
               <a class="bber-reply" onclick="acrylic.rightMenuCommentText(&quot;${item.content}&quot;)" data-pjax-state="" >
-                <i class="heofont icon-chat-1-fill" style="font-size: 1rem;">
+                <i class="heoblogIcon icon-chat-1-fill" style="font-size: 1rem;">
                 </i>
               </a>
             </div>

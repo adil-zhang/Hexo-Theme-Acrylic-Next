@@ -2,8 +2,10 @@
     <div class="pagination">
         <% const options = {
             mid_size: 1,
-            escape: false
+            escape: false,
+            next_text: '<div class="pagination_tips_next">下页</div> <i class="heoblogIcon icon-arrow-right-s-line"></i>',
+            prev_text: '<i class="heoblogIcon icon-arrow-left-s-line"></i> <div class="pagination_tips_prev">上页</div>'
         } %>
         <%- paginator(options) %>
-    </div>
+    </div>  
 </nav>

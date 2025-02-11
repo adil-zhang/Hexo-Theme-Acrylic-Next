@@ -315,7 +315,7 @@ cdn:
     fontawesomecss: https://cdn.bootcdn.net/ajax/libs/font-awesome/6.3.0/css/all.min.css
     snackbarcss: /lib/snackbar.min.css
     qrcodejs: /lib/qrcode.min.js
-    twikoojs: https://cdn.staticfile.org/twikoo/1.6.10/twikoo.all.min.js
+    twikoojs: /lib/twikoo.all.min.js
     instantsearch: https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/instantsearch.js/4.39.0/instantsearch.production.min.js
     algolia: https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/algoliasearch/4.12.1/algoliasearch-lite.umd.min.js
   body:
